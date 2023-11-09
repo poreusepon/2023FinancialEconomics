@@ -96,6 +96,18 @@ w0*q.R.05
 # compute 5% VaR using wealth quantile
 q.w1.05 - w0
 
+# compute 1% quantile of return and wealth distributions
+q.R.01 = qnorm(0.01, mu.R, sd.R)
+q.R.01
+q.w1.01 = qnorm(0.01, mu.w1, sd.w1)
+q.w1.01
+
+# compute 1% VaR using return quantile
+w0*q.R.01
+
+# compute 1% VaR using wealth quantile
+q.w1.01 - w0
+
 # plot return and loss distributions with VaR
 loss.vals = w0*R.vals
 mu.loss = w0*mu.R
@@ -106,15 +118,14 @@ plot(R.vals, dnorm(R.vals, mean=mu.R, sd=sd.R), type="l",
      main="R(t) ~ N(0.04,(0.09)^2)", xlab="R", ylab="pdf",
      lwd=2, col="blue")
 abline(v=q.R.05, lwd=2, col="red")     
+abline(v=q.R.01, lwd=2, col="green")
 # plot wealth density
 plot(loss.vals, dnorm(loss.vals, mean=mu.loss, sd=sd.loss), type="l", 
      main="R*W0 ~ N(4,000,(9,000)^2)", xlab="W0*R", ylab="pdf",
      lwd=2, col="blue")
 abline(v=q.R.05*w0, lwd=2, col="red")       
+abline(v=q.R.01*w0, lwd=2, col="green")
 par(mfrow=c(1,1))
-
-
-# 3
 
 # VaR example
 mu.R = 0.04
@@ -127,6 +138,10 @@ VaR.05 = abs(q.05.R*w0)
 VaR.01
 VaR.05
 
+
+# 3
+
+w0 = 100000
 # monthly VaR
 mu.r = 0.04
 sd.r = 0.09
